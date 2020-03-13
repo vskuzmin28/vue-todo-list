@@ -3,5 +3,5 @@
         h2 wqeqwe
         p wqewqe
 
-        a(href="#") link
+        router-link(to="/todos") App
 </template>

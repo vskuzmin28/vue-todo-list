@@ -2,42 +2,45 @@
   .main
     h2 TODOs app
     hr
+    router-link(to="/") Home
+    hr
     CreateTodoItem(
       @add-todo="addTodo"
     )
     hr
+    Loader(v-if="loading")
     TodoList(
-      v-if="todos.length"
+      v-else-if="todos.length"
       v-bind:todos="todos" 
       @remove-todo="removeTodo"
     )
-    p(v-else) NETU AZAZA
+    p(v-else) No todos!
 </template>
 
 <script>
 import TodoList from '@/components/TodoList.vue'
 import CreateTodoItem from '@/components/CreateTodoItem.vue'
+import Loader from '@/components/Loader.vue'
 
 export default {
   name: 'App',
   data() {
     return {
-      todos: [
-        // {id: 1, title: 'Simple title', completed: false},
-        // {id: 2, title: 'Simple title2', completed: false},
-        // {id: 3, title: 'Simple title3', completed: false}
-      ]
+      todos: [],
+      loading: true
     }
   },
   components: {
-    TodoList,
-    CreateTodoItem
+    TodoList, CreateTodoItem, Loader
   },
   mounted() {
       fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
         .then(response => response.json())
         .then(json => {
-          this.todos = json
+          setTimeout(() =>{
+            this.todos = json
+            this.loading = false
+          }, 1500)
         })
   },
   methods: {
