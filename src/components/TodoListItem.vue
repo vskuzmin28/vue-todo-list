@@ -2,10 +2,13 @@
     li(v-bind:class="{done: todo.completed}")
         input(
             type="checkbox"
-            v-on:change="todo.completed = !todo.completed"
+            @change="todo.completed = !todo.completed"
+            v-model="todo.completed"
+            :id="index"
         )
-        span {{index + 1}}
-        p {{todo.title}}
+        label(:for="index")
+            span {{index + 1}}
+            p {{todo.title | uppercase}}
         button.remove(v-on:click="$emit('remove-todo', todo.id)") &times;
 </template>
 
@@ -17,6 +20,11 @@ export default {
             required: true
         },
         index: Number
+    },
+    filters: {
+        uppercase(value) {
+            return value.toUpperCase()
+        }
     }
 }
 </script>
@@ -42,9 +50,16 @@ export default {
         font-weight: bold;
     }
 
-    p {
+    label {
         flex-grow: 1;
-        text-align: left;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        p {
+            text-align: left;
+        }
+
     }
 
     button {
