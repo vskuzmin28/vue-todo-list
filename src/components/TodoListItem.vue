@@ -2,7 +2,7 @@
     li(v-bind:class="{done: todo.completed}")
         input(
             type="checkbox"
-            @change="todo.completed = !todo.completed"
+            @v-on="todo.completed = !todo.completed"
             v-model="todo.completed"
             :id="index"
         )
@@ -29,7 +29,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     li {
         margin: 0;
         margin-bottom: 20px;

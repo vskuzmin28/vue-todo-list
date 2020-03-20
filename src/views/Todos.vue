@@ -4,14 +4,19 @@
     hr
     router-link(to="/") Home
     hr
-    CreateTodoItem(
-      @add-todo="addTodo"
-    )
+    .main__head
+      CreateTodoItem(
+        @add-todo="addTodo"
+      )
+      select(v-model="filter")
+        option(value="completed") Completed
+        option(value="not-completed") Not completed
+        option(value="all") All
     hr
     Loader(v-if="loading")
     TodoList(
-      v-else-if="todos.length"
-      v-bind:todos="todos" 
+      v-else-if="filteredTodos.length"
+      v-bind:todos="filteredTodos" 
       @remove-todo="removeTodo"
     )
     p(v-else) No todos!
@@ -27,7 +32,8 @@ export default {
   data() {
     return {
       todos: [],
-      loading: true
+      loading: true,
+      filter: 'all'
     }
   },
   components: {
@@ -43,6 +49,22 @@ export default {
           }, 1500)
         })
   },
+  computed: {
+    filteredTodos: function() {
+      if (this.filter === 'all') {
+        return this.todos
+      }
+
+      if (this.filter === 'completed') {
+        return this.todos.filter(t => t.completed)
+      }
+
+      if (this.filter === 'not-completed') {
+        return this.todos.filter(t => !t.completed)
+      }
+      return this.length;
+    }
+  },
   methods: {
     removeTodo(id) {
       this.todos = this.todos.filter(t => t.id !== id)
@@ -53,3 +75,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .main__head {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    &-form {
+      margin-right: 10px;
+    }
+
+  }
+</style>

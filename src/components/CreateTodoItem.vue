@@ -1,5 +1,5 @@
 <template lang='pug'>
-    form(@submit.prevent="onSubmit")
+    form(@submit.prevent="onSubmit" class='main__head-form')
         input(type="text" v-model="title")
         button(type="submit") Create
 </template>
@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     form {
         display: flex;
         flex-direction: row;
