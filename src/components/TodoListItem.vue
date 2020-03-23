@@ -9,11 +9,21 @@
         label(:for="index")
             span {{index + 1}}
             p {{todo.title | uppercase}}
-        button.remove(v-on:click="$emit('remove-todo', todo.id)") &times;
+        button.list__item-button.list__item-button_remove(v-on:click="$emit('remove-todo', todo.id)")
+            svg(xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewbox='0 0 14 14' fill='#fff')
+                path(d='M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z')
+
+
 </template>
 
 <script>
+import iconClose from '@/assets/close.svg';
 export default {
+    data() {
+        return {
+            iconClose
+        }
+    },
     props: {
         todo: {
             type: Object,
@@ -30,21 +40,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    li {
-        margin: 0;
-        margin-bottom: 20px;
-        padding: 0;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        height: 20px;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-
-    }
-
     span {
         margin: 0 10px;
         font-weight: bold;

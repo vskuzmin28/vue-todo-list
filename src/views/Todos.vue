@@ -1,8 +1,7 @@
 <template lang="pug">
   .main
-    h2 TODOs app
-    hr
-    router-link(to="/") Home
+    h2 Tasks
+    
     hr
     .main__head
       CreateTodoItem(
@@ -12,6 +11,7 @@
         option(value="completed") Completed
         option(value="not-completed") Not completed
         option(value="all") All
+    
     hr
     Loader(v-if="loading")
     TodoList(
@@ -20,6 +20,9 @@
       @remove-todo="removeTodo"
     )
     p(v-else) No todos!
+
+    hr
+    router-link(class='link' to="/") Go to home
 </template>
 
 <script>
@@ -31,23 +34,27 @@ export default {
   name: 'App',
   data() {
     return {
-      todos: [],
-      loading: true,
+      todos: [
+        {id: 0, title: "Make dinner tonight!", completed: true},
+        {id: 1, title: "Fold the laundry.", completed: false},
+        {id: 2, title: "Learn to make a Vue app!", completed: false},
+        {id: 3, title: "Todo # 3", completed: false},
+        {id: 4, title: "Todo # 4", completed: false},
+        {id: 5, title: "Todo # 5", completed: true},
+        {id: 6, title: "Todo # 6", completed: true},
+        {id: 7, title: "Todo # 7", completed: false},
+        {id: 8, title: "Todo # 8", completed: false},
+        {id: 9, title: "Todo # 9", completed: false},
+        {id: 10, title: "Todo # 10", completed: false},
+        {id: 11, title: "Todo # 11", completed: true},
+        {id: 12, title: "Todo # 12", completed: false}
+      ],
+      loading: false,
       filter: 'all'
     }
   },
   components: {
     TodoList, CreateTodoItem, Loader
-  },
-  mounted() {
-      fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
-        .then(response => response.json())
-        .then(json => {
-          setTimeout(() =>{
-            this.todos = json
-            this.loading = false
-          }, 1500)
-        })
   },
   computed: {
     filteredTodos: function() {
@@ -80,7 +87,7 @@ export default {
   .main__head {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
 
     &-form {
       margin-right: 10px;

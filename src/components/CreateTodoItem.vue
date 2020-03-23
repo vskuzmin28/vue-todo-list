@@ -1,6 +1,6 @@
 <template lang='pug'>
     form(@submit.prevent="onSubmit" class='main__head-form')
-        input(type="text" v-model="title")
+        input.form__input(type="text" v-model="title"  :placeholder="[[ placeholderValue ]]")
         button(type="submit") Create
 </template>
 
@@ -8,7 +8,8 @@
 export default {
     data() {
         return {
-            title: ''
+            title: '',
+            placeholderValue: 'Enter task name'
         }
     },
     methods: {
@@ -35,7 +36,41 @@ export default {
         justify-content: center;
 
         button {
-            width: 150px;
+            height: 30px;
+            padding: 0 35px;
+            border-radius: 2em;
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+            background-color: #4fc08d;
+            transition: all 0.15s ease;
+            box-sizing: border-box;
+            border: 1px solid #4fc08d;
+            cursor: pointer;
+            outline: none;
+
+            &:hover {
+                background: #35495e;
+                border-color: #35495e;
+            }
+
+        }
+
+        input {
+            height: 30px;
+            line-height: 30px;
+            box-sizing: border-box;
+            padding: 0 15px 0 15px;
+            border: 1px solid #e3e3e3;
+            color: #273849;
+            outline: none;
+            border-radius: 15px;
+            margin-right: 10px;
+            transition: border-color 0.2s ease;
+
+            &:hover, &:focus {
+                border-color: #35495e;
+            }
         }
 
     }
